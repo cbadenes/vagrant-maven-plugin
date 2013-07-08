@@ -4,3 +4,5 @@ vagrant-maven-plugin [![Build Status](https://buildhive.cloudbees.com/job/nicoul
 **[Maven](http://maven.apache.org) plugin for [Vagrant](http://www.vagrantup.com).**
 
 The documentation is at <http://nicoulaj.github.com/vagrant-maven-plugin>.
+
+This fork allows to build a multiproject using this plugin in any module.
