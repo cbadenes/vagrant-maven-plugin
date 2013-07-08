@@ -23,9 +23,9 @@
     <version>23</version>
   </parent>
 
-  <groupId>net.ju-n.maven.plugins</groupId>
+  <groupId>es.cabadol.maven</groupId>
   <artifactId>vagrant-maven-plugin</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.1.0</version>
   <packaging>maven-plugin</packaging>
 
   <name>Vagrant Maven plugin</name>
@@ -40,27 +40,10 @@
     </license>
   </licenses>
 
-  <scm>
-    <url>http://github.com/nicoulaj/vagrant-maven-plugin</url>
-    <connection>scm:git:git@github.com:nicoulaj/vagrant-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:nicoulaj/vagrant-maven-plugin.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-
-  <issueManagement>
-    <system>Github</system>
-    <url>http://github.com/nicoulaj/vagrant-maven-plugin/issues</url>
-  </issueManagement>
-
-  <ciManagement>
-    <system>Cloudbees BuildHive</system>
-    <url>https://buildhive.cloudbees.com/job/nicoulaj/job/vagrant-maven-plugin/</url>
-  </ciManagement>
-
   <distributionManagement>
     <site>
       <id>github</id>
-      <url>gitsite:git@github.com/nicoulaj/vagrant-maven-plugin.git</url>
+      <url>gitsite:git@github.com/cabadol/vagrant-maven-plugin.git</url>
     </site>
   </distributionManagement>
 
@@ -101,7 +84,7 @@
         <type>gem</type>
       </dependency>
       <dependency>
-        <groupId>${project.groupId}.${project.artifactId}.it.boxes</groupId>
+        <groupId>net.ju-n.maven.plugins.vagrant-maven-plugin.it.boxes</groupId>
         <artifactId>${test.box}</artifactId>
         <version>${test.box.version}</version>
         <type>zip</type>
@@ -121,7 +104,7 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}.${project.artifactId}.it.boxes</groupId>
+      <groupId>net.ju-n.maven.plugins.vagrant-maven-plugin.it.boxes</groupId>
       <artifactId>${test.box}</artifactId>
       <type>zip</type>
       <scope>test</scope>
@@ -141,7 +124,7 @@
             <configuration>
               <rules>
                 <requireJavaVersion>
-                  <version>(1.4,1.7)</version>
+                  <version>(1.4,1.8)</version>
                 </requireJavaVersion>
               </rules>
             </configuration>
@@ -195,35 +178,6 @@
               <includeScope>test</includeScope>
               <outputDirectory>${test.box.directory}</outputDirectory>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-invoker-plugin</artifactId>
-        <configuration>
-          <localRepositoryPath>${project.build.directory}/it/local-repository</localRepositoryPath>
-          <showErrors>true</showErrors>
-          <settingsFile>src/it/settings.xml</settingsFile>
-          <projectsDirectory>src/it/projects</projectsDirectory>
-          <pomIncludes>
-            <pomInclude>*/pom.xml</pomInclude>
-          </pomIncludes>
-          <cloneProjectsTo>${project.build.directory}/it/projects</cloneProjectsTo>
-          <reportsDirectory>${project.build.directory}/it/reports</reportsDirectory>
-          <addTestClassPath>true</addTestClassPath>
-          <selectorScript>selector.bsh</selectorScript>
-          <goals>
-            <goal>clean</goal>
-            <goal>install</goal>
-          </goals>
-        </configuration>
-        <executions>
-          <execution>
-            <id>run-integration-tests</id>
-            <goals>
-              <goal>install</goal>
-              <goal>run</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>

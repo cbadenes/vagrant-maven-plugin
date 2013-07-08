@@ -15,10 +15,12 @@
  */
 package net.nicoulaj.maven.plugins.vagrant;
 
-import de.saumya.mojo.gem.AbstractGemMojo;
-import de.saumya.mojo.ruby.gems.GemManager;
-import de.saumya.mojo.ruby.script.Script;
-import de.saumya.mojo.ruby.script.ScriptException;
+import static java.util.Arrays.asList;
+import static org.codehaus.plexus.util.StringUtils.isNotBlank;
+
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -28,11 +30,10 @@ import org.apache.maven.repository.RepositorySystem;
 import org.codehaus.classworlds.ClassRealm;
 import org.codehaus.plexus.archiver.UnArchiver;
 
-import java.io.File;
-import java.io.IOException;
-
-import static java.util.Arrays.asList;
-import static org.codehaus.plexus.util.StringUtils.isNotBlank;
+import de.saumya.mojo.gem.AbstractGemMojo;
+import de.saumya.mojo.ruby.gems.GemManager;
+import de.saumya.mojo.ruby.script.Script;
+import de.saumya.mojo.ruby.script.ScriptException;
 
 /**
  * Base class for {@code Mojo}s invoking Vagrant.
@@ -142,6 +143,15 @@ abstract class AbstractVagrantMojo extends AbstractGemMojo {
      */
     private GemManager manager;
 
+    /**
+     * Required by {@link AbstractGemMojo}.
+     *
+     * @parameter default-value="${project.basedir}"
+     * @required
+     * @readonly
+     */
+    private File directory;
+    
     /** Setup {@link AbstractGemMojo}. */
     private void setup() {
         super.project = this.project;
@@ -192,6 +202,6 @@ abstract class AbstractVagrantMojo extends AbstractGemMojo {
         factory.addEnv("VAGRANT_RC", vagrantRc);
         final Script script = factory.newScriptFromSearchPath("vagrant");
         for (String arg : args) if (isNotBlank(arg)) script.addArg(arg);
-        script.execute();
+        script.executeIn(directory);
     }
 }
